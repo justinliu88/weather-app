@@ -11,10 +11,12 @@ const API_KEY = "6e41c655f9339921c7ebd5bad96fd981";
 class App extends React.Component {
     state = {
         city: "",
+        displayCity: "",
         unit: "metric",
         temperature: undefined,
         weather: undefined,
         windSpeed: undefined,
+        humidity: undefined,
         apiData: {},
     };
 
@@ -40,15 +42,17 @@ class App extends React.Component {
             if (city) {
                 this.setState({
                     temperature: data.main.temp,
-                    city: data.name,
+                    displayCity: data.name,
                     weather: data.weather[0].main,
                     windSpeed: data.wind.speed,
+                    humidity: data.main.humidity,
                 });
 
                 console.table(
                     this.state.temperature,
                     this.state.city,
-                    this.state.weather
+                    this.state.weather,
+                    this.state.humidity
                 );
             }
         } catch (err) {
@@ -71,9 +75,10 @@ class App extends React.Component {
                 <section>
                     <WeatherCondition
                         temperature={this.state.temperature}
-                        city={this.state.city}
+                        city={this.state.displayCity}
                         weather={this.state.weather}
                         windSpeed={this.state.windSpeed}
+                        humidity={this.state.humidity}
                     />{" "}
                     <WeatherForecast
                         apiData={this.state.city}

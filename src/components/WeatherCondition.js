@@ -22,7 +22,10 @@ class WeatherCondition extends React.Component {
                         <div className="weather-condition__desc">
                             <div>
                                 <img src={Umb} alt="umb" />
-                                <span className="citem">20%</span>
+                                <span className="citem">
+                                    {" "}
+                                    {`${Math.round(this.props.humidity)} %`}
+                                </span>
                             </div>
                             <div>
                                 <img src={Wind} alt="wind" />{" "}
