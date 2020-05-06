@@ -8,6 +8,9 @@ import ForecastRow from "./ForecastRow";
 class WeatherForecast extends React.Component {
     state = {
         forecasts: [],
+        forecastBuffer: [],
+        btnFiveClass: ["forecast__switch_0"],
+        btnTenClass: ["forecast__switch_1"],
     };
 
     componentDidMount() {
@@ -15,19 +18,60 @@ class WeatherForecast extends React.Component {
             "https://jr-weather-api.herokuapp.com/api/weather?cc=au&city=brisbane"
         ).then((res) => {
             //   console.log(res);
-            const forecasts = res.data.data.forecast.slice(0, 10);
-            this.setState({ forecasts });
+            const data = res.data.data.forecast.slice(0, 10);
+            this.setState({ forecastBuffer: data });
+            this.setState({ forecasts: this.state.forecastBuffer.slice(0, 0) });
         });
     }
+
+    showFiveRows = () => {
+        const fiveRow = this.state.forecastBuffer.slice(0, 5);
+        this.setState({ forecasts: fiveRow });
+        if (!this.state.btnFiveClass.includes("switch-active")) {
+            this.setState({
+                btnFiveClass: this.state.btnFiveClass.push("switch-active"),
+                btnFiveClass: this.state.btnFiveClass.join(" "),
+            });
+        }
+        if (this.state.btnTenClass.includes("switch-active")) {
+            this.setState({
+                btnTenClass: ["forecast__switch_1"],
+            });
+        }
+    };
+
+    showTenRows = () => {
+        this.setState({ forecasts: this.state.forecastBuffer });
+        //console.log(this.state.forecasts);
+        if (this.state.btnFiveClass.includes("switch-active")) {
+            this.setState({
+                btnFiveClass: ["forecast__switch_0"],
+            });
+        }
+        if (!this.state.btnTenClass.includes("switch-active")) {
+            this.setState({
+                btnTenClass: this.state.btnTenClass.push("switch-active"),
+                btnTenClass: this.state.btnTenClass.join(" "),
+            });
+        }
+    };
 
     render() {
         return (
             <section className="weather-forecast">
                 <div className="forecast__switch">
-                    <button className="forecast__switch_0 switch-active">
+                    <button
+                        className={this.state.btnFiveClass}
+                        onClick={this.showFiveRows}
+                    >
                         5 items
                     </button>
-                    <button className="forecast__switch_1">10 items</button>
+                    <button
+                        className={this.state.btnTenClass}
+                        onClick={this.showTenRows}
+                    >
+                        10 items
+                    </button>
                 </div>
                 {this.state.forecasts.map((forecast) => {
                     const date = new Date(forecast.time * 1000);

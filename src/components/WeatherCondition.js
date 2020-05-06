@@ -1,4 +1,7 @@
 import React from "react";
+import Umb from "../icon/icon-umberella.png";
+import Wind from "../icon/icon-wind.png";
+import Compass from "../icon/icon-compass.png";
 
 class WeatherCondition extends React.Component {
     render() {
@@ -18,18 +21,15 @@ class WeatherCondition extends React.Component {
                         </div>
                         <div className="weather-condition__desc">
                             <div>
-                                <img src="icon/icon-umberella.png" alt="umb" />
+                                <img src={Umb} alt="umb" />
                                 <span className="citem">20%</span>
                             </div>
                             <div>
-                                <img src="icon/icon-wind.png" alt="wind" />{" "}
+                                <img src={Wind} alt="wind" />{" "}
                                 <span className="citem">{`${this.props.windSpeed} km/h`}</span>
                             </div>
                             <div>
-                                <img
-                                    src="icon/icon-compass.png"
-                                    alt="compass"
-                                />{" "}
+                                <img src={Compass} alt="compass" />{" "}
                                 <span className="citem">NE</span>
                             </div>
                         </div>

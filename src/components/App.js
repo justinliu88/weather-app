@@ -24,28 +24,32 @@ class App extends React.Component {
     };
 
     getWeather = async (e) => {
-        e.preventDefault();
-        const city = this.state.city;
-        const unit = this.state.unit;
-        const api_call = await fetch(
-            `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${unit}`
-        );
-
-        const data = await api_call.json();
-        console.log(data);
-        if (city) {
-            this.setState({
-                temperature: data.main.temp,
-                city: data.name,
-                weather: data.weather[0].main,
-                windSpeed: data.wind.speed,
-            });
-
-            console.table(
-                this.state.temperature,
-                this.state.city,
-                this.state.weather
+        try {
+            e.preventDefault();
+            const city = this.state.city;
+            const unit = this.state.unit;
+            const api_call = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${unit}`
             );
+
+            const data = await api_call.json();
+            console.log(data);
+            if (city) {
+                this.setState({
+                    temperature: data.main.temp,
+                    city: data.name,
+                    weather: data.weather[0].main,
+                    windSpeed: data.wind.speed,
+                });
+
+                console.table(
+                    this.state.temperature,
+                    this.state.city,
+                    this.state.weather
+                );
+            }
+        } catch (err) {
+            alert("404, city not found");
         }
     };
 
