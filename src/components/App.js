@@ -15,6 +15,7 @@ class App extends React.Component {
         temperature: undefined,
         weather: undefined,
         windSpeed: undefined,
+        apiData: {},
     };
 
     getCityValue = (e) => {
@@ -33,6 +34,8 @@ class App extends React.Component {
             );
 
             const data = await api_call.json();
+
+            //this.setState({ apiData: data });
             console.log(data);
             if (city) {
                 this.setState({
@@ -72,7 +75,11 @@ class App extends React.Component {
                         weather={this.state.weather}
                         windSpeed={this.state.windSpeed}
                     />{" "}
-                    <WeatherForecast />
+                    <WeatherForecast
+                        apiData={this.state.city}
+                        city={this.state.city}
+                        unit={this.state.unit}
+                    />
                 </section>
 
                 <Footer />

@@ -4,7 +4,7 @@ import axios from "axios";
 import { format } from "date-fns";
 
 import ForecastRow from "./ForecastRow";
-
+const API_KEY = "6e41c655f9339921c7ebd5bad96fd981";
 class WeatherForecast extends React.Component {
     state = {
         forecasts: [],
@@ -15,10 +15,13 @@ class WeatherForecast extends React.Component {
 
     componentDidMount() {
         axios(
-            "https://jr-weather-api.herokuapp.com/api/weather?cc=au&city=brisbane"
+            //"https://jr-weather-api.herokuapp.com/api/weather?cc=au&city=brisbane"
+
+            `https://api.openweathermap.org/data/2.5/forecast?q=brisbane&appid=${API_KEY}&units=${this.props.unit}`
         ).then((res) => {
-            //   console.log(res);
-            const data = res.data.data.forecast.slice(0, 10);
+            console.log(res);
+            //const data = res.data.data.forecast.slice(0, 10);
+            const data = res.data.list.slice(0, 10);
             this.setState({ forecastBuffer: data });
             this.setState({ forecasts: this.state.forecastBuffer.slice(0, 0) });
         });
@@ -74,16 +77,16 @@ class WeatherForecast extends React.Component {
                     </button>
                 </div>
                 {this.state.forecasts.map((forecast) => {
-                    const date = new Date(forecast.time * 1000);
+                    const date = new Date(forecast.dt * 1000);
                     const day = format(date, "EEE");
                     const time = format(date, "HH:mm");
 
                     return (
                         <ForecastRow
-                            key={forecast.time}
+                            key={date}
                             day={day}
-                            high={forecast.maxCelsius}
-                            low={forecast.minCelsius}
+                            high={forecast.main.temp_max}
+                            low={forecast.main.temp_min}
                             time={time}
                         />
                     );
