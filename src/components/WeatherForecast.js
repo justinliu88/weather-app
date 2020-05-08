@@ -13,11 +13,10 @@ class WeatherForecast extends React.Component {
         btnTenClass: ["forecast__switch_1"],
     };
 
-    componentDidMount() {
+    componentWillReceiveProps() {
         axios(
             //"https://jr-weather-api.herokuapp.com/api/weather?cc=au&city=brisbane"
-
-            `https://api.openweathermap.org/data/2.5/forecast?q=brisbane&appid=${API_KEY}&units=${this.props.unit}`
+            `https://api.openweathermap.org/data/2.5/forecast?q=${this.props.city}&appid=${API_KEY}&units=${this.props.unit}`
         ).then((res) => {
             console.log(res);
             //const data = res.data.data.forecast.slice(0, 10);

@@ -81,8 +81,8 @@ class App extends React.Component {
                         humidity={this.state.humidity}
                     />{" "}
                     <WeatherForecast
-                        apiData={this.state.city}
                         city={this.state.city}
+                        //displayCity={this.state.displayCity}
                         unit={this.state.unit}
                     />
                 </section>
